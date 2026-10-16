@@ -35,7 +35,7 @@ jobs:
         }
         steps {
           dsl {
-            external('jobs/**/*.groovy')
+            external('jenkins/job-dsl/**/*.groovy')
             lookupStrategy('JENKINS_ROOT')
             removeAction('DELETE')
           }
