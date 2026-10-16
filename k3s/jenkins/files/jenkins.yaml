@@ -1,0 +1,16 @@
+jenkins:
+  systemMessage: "Jenkins on k3s (JCasC)"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "${readFile:/var/jenkins_home/user-secrets/admin-user}"
+          password: "${readFile:/var/jenkins_home/user-secrets/admin-password}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+unclassified:
+  location:
+    url: "http://jenkins.k3s.int/"
