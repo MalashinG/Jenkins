@@ -1,4 +1,4 @@
-def folder = [
+def folders = [
     [
         name: 'test',
         displayName: 'Test Folder',
@@ -7,7 +7,7 @@ def folder = [
 ]
 
 
-folder.each { item ->
+folders.each { item ->
     folder(item.name) {
         displayName(item.displayName)
         description(item.description)
