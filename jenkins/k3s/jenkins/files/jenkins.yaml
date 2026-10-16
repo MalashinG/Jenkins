@@ -29,7 +29,7 @@ jobs:
         description('Генерирует джобы из jobs/*.groovy')
         scm {
           git {
-            remote { url('https://github.com/MalashinG/devops-jenkins.git') }
+            remote { url('https://github.com/MalashinG/Jenkins') }
             branch('*/main')
           }
         }
