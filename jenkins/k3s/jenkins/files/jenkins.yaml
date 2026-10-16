@@ -1,0 +1,43 @@
+jenkins:
+  systemMessage: "Jenkins on k3s (JCasC)"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "${readFile:/var/jenkins_home/user-secrets/admin-user}"
+          password: "${readFile:/var/jenkins_home/user-secrets/admin-password}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+security:
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+
+unclassified:
+  location:
+    url: "http://jenkins.k3s.int/"
+
+jobs:
+  - script: |
+      folder('admin') {
+        description('Служебные джобы')
+      }
+  - script: |
+      job('admin/seed') {
+        description('Генерирует джобы из jobs/*.groovy')
+        scm {
+          git {
+            remote { url('https://github.com/MalashinG/devops-jenkins.git') }
+            branch('*/main')
+          }
+        }
+        steps {
+          dsl {
+            external('jobs/**/*.groovy')
+            lookupStrategy('JENKINS_ROOT')
+            removeAction('DELETE')
+          }
+        }
+      }
